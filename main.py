@@ -4,8 +4,8 @@ import xml.etree.ElementTree as ET
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-# 改用 RSSHub 的官方穩定公共實例
-TWITTER_RSS_URL = "https://rss.artie.id/twitter/user/Wuthering_Waves"
+# 改用另一個活躍的 RSSHub 節點
+TWITTER_RSS_URL = "https://rsshub.rssforever.com/twitter/user/Wuthering_Waves"
 
 def check_and_post():
     if not DISCORD_WEBHOOK_URL:
@@ -13,7 +13,9 @@ def check_and_post():
         return
 
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
         response = requests.get(TWITTER_RSS_URL, headers=headers, timeout=10)
         
         if response.status_code == 200:
