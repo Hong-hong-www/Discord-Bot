@@ -4,8 +4,8 @@ import xml.etree.ElementTree as ET
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-# 改用另一個穩定的 Nitter 節點
-TWITTER_RSS_URL = "https://nitter.poast.org/Wuthering_Waves/rss"
+# 改用 RSSHub 的官方穩定公共實例
+TWITTER_RSS_URL = "https://rss.artie.id/twitter/user/Wuthering_Waves"
 
 def check_and_post():
     if not DISCORD_WEBHOOK_URL:
