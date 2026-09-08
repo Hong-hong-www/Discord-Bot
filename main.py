@@ -3,7 +3,9 @@ import requests
 import xml.etree.ElementTree as ET
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
-TWITTER_RSS_URL = "https://rsshub.app/twitter/user/Wuthering_Waves"
+
+# 改用穩定的 Nitter RSS 來源來追蹤《鳴潮》英文官方帳號
+TWITTER_RSS_URL = "https://nitter.privacydev.net/Wuthering_Waves/rss"
 
 def check_and_post():
     if not DISCORD_WEBHOOK_URL:
@@ -11,7 +13,9 @@ def check_and_post():
         return
 
     try:
-        response = requests.get(TWITTER_RSS_URL, timeout=10)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(TWITTER_RSS_URL, headers=headers, timeout=10)
+        
         if response.status_code == 200:
             root = ET.fromstring(response.content)
             item = root.find(".//item")
@@ -29,7 +33,7 @@ def check_and_post():
                 else:
                     print(f"發送失敗，錯誤碼：{discord_res.status_code}")
         else:
-            print(f"無法讀取 Twitter RSS，狀態碼：{response.status_code}")
+            print(f"無法讀取 RSS，狀態碼：{response.status_code}")
     except Exception as e:
         print(f"發生錯誤：{e}")
 
